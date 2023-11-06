@@ -1,0 +1,12 @@
+Sprite2D
+ParallaxLayer
+ParallaxBackground
+Polygon2D
+SS2D_Shape_Closed
+RigidBody2D
+CharacterBody2D
+AnimationTree
+CollisionShape2D
+TileMap
+Camera2D
+AnimationPlayer
