@@ -10,8 +10,8 @@ public partial class followCam : Camera2D
 		var mapRect = tileMap.GetUsedRect();
 		var tileSize = tileMap.CellQuadrantSize;
 		var worldSizePx = mapRect.Size * tileSize;
-		LimitRight = worldSizePx.X;
-		LimitBottom = worldSizePx.Y;
+		//LimitRight = worldSizePx.X;
+		//LimitBottom = worldSizePx.Y;
 		GD.Print(worldSizePx);
 	}
 

@@ -20,13 +20,15 @@ public partial class Player : CharacterBody2D
 	private AnimationNodeStateMachinePlayback stateMachine;
 	private AnimationTree animationTree;
 
+	private AudioStreamPlayer2D soundEffect;
+
 	 void _ready() {
 		stateMachine = GetNode<AnimationTree>("AnimationTree").Get("parameters/playback").As<AnimationNodeStateMachinePlayback>();
 	    animationTree = GetNode<AnimationTree>("AnimationTree");
 		starting_direction =  new Vector2(0,(float)0.1);
 		velocity = new Vector2(1,1);
 		updateAnimationParameter(starting_direction);
-	 }
+ }
 
 	private Vector2 GetInput() {
 		_rotationDirection = Input.GetAxis("ui_left", "ui_right");
@@ -60,7 +62,7 @@ public partial class Player : CharacterBody2D
 	public override void _PhysicsProcess(double delta)
 	{
 		// Velocity is a property of RigidBody2D.
-
+		soundEffect = GetNode<AudioStreamPlayer2D>("./SoundEffectPlayer");
 		//parameters/idle/blend_position
 		velocity = Velocity;
 		
@@ -84,12 +86,29 @@ public partial class Player : CharacterBody2D
 
 		if(Input.IsActionPressed("ui_up") || Input.IsActionPressed("ui_down")) {
 			velocity += direction.Rotated(Rotation) * ACCELERATION;
-			//GD.Print(velocity);
+			if(!soundEffect.Playing)
+			{
+				soundEffect.Play();
+				
+			}
+			soundEffect.VolumeDb +=  0.0001f;
+			if(soundEffect.VolumeDb > 1)
+			{
+				soundEffect.VolumeDb = 1;
+			}
+			//soundEffect.VolumeDb = Mathf.Lerp(soundEffect.VolumeDb,0,1);
 			//velocity = velocity * Speed * ACCELERATION;
 		}
 		else{
 			velocity.X = Mathf.Lerp(velocity.X,0,0.1f);
 			velocity.Y = Mathf.Lerp(velocity.Y,0,0.1f);
+			soundEffect.Stop();
+			soundEffect.VolumeDb -= ACCELERATION * 0.0001f;
+			if(soundEffect.VolumeDb < 1)
+			{
+				soundEffect.VolumeDb = 0;
+			}
+			//soundEffect.VolumeDb = Mathf.Lerp(soundEffect.VolumeDb,0,1);
 		} 
 
 
@@ -99,71 +118,116 @@ public partial class Player : CharacterBody2D
 		if(!Input.IsActionPressed("ui_up") && !Input.IsActionPressed("ui_down")) {
 			if(Input.IsActionPressed("ui_left") || Input.IsActionPressed("ui_right")) {
 				//RotationSpeed -= ROTATION_ACCELERATION * _rotationDirection.Normalized().X; 
-				RotationSpeed += ROTATION_ACCELERATION ;
-				//RotationSpeed = Mathf.Clamp(RotationSpeed,-1,1);
+		
+				//RotationSpeed = Mathf.Clamp(RotationSpeed,(float)0.2,(float)-0.2);
+
+				if(Input.IsActionPressed("ui_left")){
+					RotationSpeed -= ROTATION_ACCELERATION ;
+								velocity += direction.Rotated(Rotation) * ACCELERATION;
+				}
+				if(Input.IsActionPressed("ui_right")){
+					RotationSpeed += ROTATION_ACCELERATION ;
+								velocity += direction.Rotated(Rotation) * ACCELERATION;
+				}
+
 				if(RotationSpeed >= 0.2){
 					RotationSpeed = 0.2f;
 				}
 				if(RotationSpeed <= -0.2){
 					RotationSpeed = -0.2f;
 				}
-	
-				Rotation += RotationSpeed * _rotationDirection;
+
+					
+				//rotation += RotationSpeed; //ne peut pas y mettre direction, sinon la ralentissement ne marchera pas comme il faut
 			
 				
 				// ui left, turn left, if ui right, turn right
 				//velocity = velocity.Rotated(rotation);
-				
 			}
 			else{
-				
 					//RotationSpeed -= ROTATION_ACCELERATION * _rotationDirection.Normalized().X; 
-					if(RotationSpeed != 0) {
-							RotationSpeed -= ROTATION_ACCELERATION;
+					if(RotationSpeed < 0) {
+							RotationSpeed += ROTATION_ACCELERATION;
 						// if(_rotationDirection > 0){
 						// 	RotationSpeed -= ROTATION_ACCELERATION;
 						// 	GD.Print("right");
 						// }
-						if(RotationSpeed <= 0){
-							RotationSpeed = 0;
+					}
+					else
+					{
+						if(RotationSpeed > 0){
+							RotationSpeed -= ROTATION_ACCELERATION;
+						//	GD.Print("left");
 						}
 					}
-		
+
+					if(Mathf.IsEqualApprox(_rotationDirection, 0)){
+						_rotationDirection = 0;
+						//GD.Print("close to 0");
+					}
+					else{
+					//	GD.Print("test");
+					}
+
 							
 					//GD.Print("in");
 					
-					Rotation += RotationSpeed * _rotationDirectionTmp;
+					//Rotation += RotationSpeed;
 					//Rotation += RotationSpeed * _rotationDirection;
 					
 			}
 		}
 		else{
-			if(RotationSpeed != 0) {
-							RotationSpeed -= ROTATION_ACCELERATION;
+
+					if(RotationSpeed < 0) {
+							RotationSpeed += ROTATION_ACCELERATION;
 						// if(_rotationDirection > 0){
 						// 	RotationSpeed -= ROTATION_ACCELERATION;
-						// 	GD.Print("right");
+						 //	GD.Print("right");
 						// }
-						if(RotationSpeed <= 0){
-							RotationSpeed = 0;
+					}
+					else
+					{
+						if(RotationSpeed > 0){
+							RotationSpeed -= ROTATION_ACCELERATION;
+						//	GD.Print("left");
 						}
 					}
+
+					if(Mathf.IsEqualApprox(_rotationDirection, 0)){
+						_rotationDirection = 0;
+						//GD.Print("close to 0");
+					}
+					else{
+					//	GD.Print("test");
+					}
+			// if(RotationSpeed != 0) {
+			// 				RotationSpeed -= ROTATION_ACCELERATION;
+			// 			// if(_rotationDirection > 0){
+			// 			// 	RotationSpeed -= ROTATION_ACCELERATION;
+			// 			// 	GD.Print("right");
+			// 			// }
+			// 			// if(RotationSpeed <= 0){
+			// 			// 	RotationSpeed = 0;
+			// 			// }
+			// 		}
 		
 							
 					//GD.Print("in");
 					
-					Rotation += RotationSpeed * _rotationDirectionTmp;
+					//Rotation += RotationSpeed * _rotationDirectionTmp;
 		}
-		GD.Print(RotationSpeed * _rotationDirectionTmp);
+		//GD.Print(RotationSpeed);
 				
 
 			//GD.Print(RotationSpeed);
 		//velocity = direction  * Speed * (float)delta;	
 		//Velocity = velocity.Rotated(rotation);
+		Rotation += RotationSpeed;
 		Velocity = velocity;
 		//GD.Print(Velocity);
 		
 		MoveAndSlide();
-		pickNewState();
+		//pickNewState();
 	}
 }
