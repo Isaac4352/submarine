@@ -27,4 +27,9 @@ public partial class menu : Control
 	{
 		GetTree().ChangeSceneToFile("options_menu.tscn");
 	}
+
+	void _on_instructions_pressed()
+	{
+		GetTree().ChangeSceneToFile("instructions.tscn");
+	}
 }

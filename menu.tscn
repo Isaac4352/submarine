@@ -25,6 +25,10 @@ layout_mode = 2
 layout_mode = 2
 text = "Start"
 
+[node name="Instructions" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Instructions"
+
 [node name="Options" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Options"
@@ -34,5 +38,6 @@ layout_mode = 2
 text = "Quit"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Instructions" to="." method="_on_instructions_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

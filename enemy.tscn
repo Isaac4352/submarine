@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://3ufvl5fxm145"]
+
+[ext_resource type="Texture2D" uid="uid://c0v7c6xjs2yq7" path="res://sprites/squid.png" id="1_uusp8"]
+[ext_resource type="Script" path="res://enemy.cs" id="1_yei2t"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kodm5"]
+radius = 149.335
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ic3uw"]
+radius = 0.342379
+
+[node name="enemy" type="CharacterBody2D"]
+position = Vector2(35, 10)
+script = ExtResource("1_yei2t")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-34, -9.00002)
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("1_uusp8")
+
+[node name="detectionArea" type="Area2D" parent="."]
+light_mask = 2
+visibility_layer = 2
+
+[node name="detectionShape" type="CollisionShape2D" parent="detectionArea"]
+position = Vector2(-35, -10)
+shape = SubResource("CircleShape2D_kodm5")
+
+[node name="enemyCollision" type="CollisionShape2D" parent="."]
+position = Vector2(-35, -10)
+scale = Vector2(14.6569, 10.7568)
+shape = SubResource("CircleShape2D_ic3uw")
+
+[connection signal="body_entered" from="detectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="detectionArea" to="." method="_on_detection_area_body_exited"]

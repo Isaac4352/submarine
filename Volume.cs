@@ -20,7 +20,7 @@ public partial class Volume : HSlider
 	{
 	}
 
-	public void _on_volume_slider_value_changed(float value) 
+	public void _on_value_changed(float value) 
 	{
 		AudioServer.SetBusVolumeDb(busIndex,Mathf.LinearToDb(value));
 	}

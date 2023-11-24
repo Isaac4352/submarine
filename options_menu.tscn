@@ -22,8 +22,21 @@ script = ExtResource("2_t278k")
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
+[node name="CheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/CheckBox"]
+layout_mode = 0
+offset_left = -119.0
+offset_top = -2.0
+offset_right = -2.0
+offset_bottom = 24.0
+scale = Vector2(1, 1.01686)
+text = "son désactivé?:"
+
 [node name="Volume_slider2" parent="MarginContainer/VBoxContainer" instance=ExtResource("3_ex2wv")]
 layout_mode = 2
+value = 1.0
 busName = "Master"
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Volume_slider2"]
@@ -36,6 +49,7 @@ text = "Master:"
 
 [node name="Volume_slider" parent="MarginContainer/VBoxContainer" instance=ExtResource("3_ex2wv")]
 layout_mode = 2
+value = 1.0
 busName = "background"
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Volume_slider"]
@@ -47,6 +61,7 @@ text = "Background:"
 
 [node name="Volume_slider3" parent="MarginContainer/VBoxContainer" instance=ExtResource("3_ex2wv")]
 layout_mode = 2
+value = 1.0
 busName = "sfx"
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Volume_slider3"]
@@ -61,5 +76,5 @@ text = "sfx:"
 layout_mode = 2
 text = "Back"
 
-[connection signal="value_changed" from="MarginContainer/VBoxContainer/Volume_slider" to="." method="_on_volume_slider_value_changed"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/CheckBox" to="." method="_on_check_box_toggled"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Back" to="." method="_on_back_pressed"]

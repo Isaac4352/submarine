@@ -15,6 +15,11 @@ run/main_scene="res://World.tscn"
 config/features=PackedStringArray("4.1", "C#")
 config/icon="res://icon.png"
 
+[autoload]
+
+Submarine="*res://submarine.tscn"
+Player="*res://Player.cs"
+
 [display]
 
 window/size/viewport_width=320
