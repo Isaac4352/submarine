@@ -21,9 +21,9 @@ script = ExtResource("2_aod66")
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="Start" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Commencer" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Start"
+text = "Commencer"
 
 [node name="Instructions" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -33,11 +33,11 @@ text = "Instructions"
 layout_mode = 2
 text = "Options"
 
-[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Quitter" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Quit"
+text = "Quitter"
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Commencer" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Instructions" to="." method="_on_instructions_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Options" to="." method="_on_options_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Quitter" to="." method="_on_quit_pressed"]

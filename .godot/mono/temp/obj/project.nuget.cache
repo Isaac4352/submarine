@@ -1,15 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "JDK57FAG+/z5MKk0qE9c8mpv9WzbsgbiuSa6MSkqZUFL7UEzzRt9I0dz8j2juI2fEOXmz0t49bA/9dpTIxCkMg==",
+  "dgSpecHash": "3N9lnJFF2qrHgwms3Btzo+m/JqxuUx+b19rxfobWwYNljnKO5PzHjdEmIGajqUr7BDt7DaZSKQaZigePW7Mo+w==",
   "success": true,
   "projectFilePath": "C:\\Users\\isaac\\OneDrive\\Documents\\college\\prog_jeux\\submarine\\submarine\\a20c02b_playerMovement.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\isaac\\.nuget\\packages\\godot.sourcegenerators\\4.1.1\\godot.sourcegenerators.4.1.1.nupkg.sha512",
     "C:\\Users\\isaac\\.nuget\\packages\\godotsharp\\4.1.1\\godotsharp.4.1.1.nupkg.sha512",
-    "C:\\Users\\isaac\\.nuget\\packages\\godotsharpeditor\\4.1.1\\godotsharpeditor.4.1.1.nupkg.sha512",
-    "C:\\Users\\isaac\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.23\\microsoft.netcore.app.ref.6.0.23.nupkg.sha512",
-    "C:\\Users\\isaac\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.23\\microsoft.windowsdesktop.app.ref.6.0.23.nupkg.sha512",
-    "C:\\Users\\isaac\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.23\\microsoft.aspnetcore.app.ref.6.0.23.nupkg.sha512"
+    "C:\\Users\\isaac\\.nuget\\packages\\godotsharpeditor\\4.1.1\\godotsharpeditor.4.1.1.nupkg.sha512"
   ],
   "logs": []
 }

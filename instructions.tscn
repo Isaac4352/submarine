@@ -8,17 +8,17 @@ offset_bottom = 243.0
 text = "avancer/reculer: les fèches de haut et bas
 tourner: les flèches de gauche et droite
 
-Il faut collecter les trésors pour gagner le jeu
+Il faut collecter les trésors et sortir pour gagner le jeu
 "
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Retour" type="Button" parent="."]
 layout_mode = 0
-offset_left = 129.0
-offset_top = 177.0
-offset_right = 190.0
-offset_bottom = 208.0
+offset_left = 166.0
+offset_top = 180.0
+offset_right = 227.0
+offset_bottom = 211.0
 text = "Retour"
 script = ExtResource("1_fbsaf")
 

@@ -5,10 +5,10 @@ public partial class World : Node2D
 {
 	// Called when the node enters the scene tree for the first time.
 
-	private AudioStreamPlayer ambiance;
+	private AudioStreamPlayer2D ambiance;
 	public override void _Ready()
 	{
-		ambiance = GetNode<AudioStreamPlayer>("AudioStreamPlayer2D");
+		ambiance = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
 		GD.Print("readyTest");
 	}
 

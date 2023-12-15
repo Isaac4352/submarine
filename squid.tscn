@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4rpqjwr2fn3e"]
+
+[ext_resource type="Texture2D" uid="uid://c0v7c6xjs2yq7" path="res://sprites/squid.png" id="1_ax7na"]
+[ext_resource type="Script" path="res://squid.cs" id="1_xggcg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i456f"]
+radius = 148.389
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_begii"]
+radius = 2.17889
+
+[node name="squid" type="CharacterBody2D"]
+script = ExtResource("1_xggcg")
+
+[node name="detectionArea" type="Area2D" parent="."]
+light_mask = 2
+visibility_layer = 2
+position = Vector2(-33, -12)
+
+[node name="detectionShape" type="CollisionShape2D" parent="detectionArea"]
+position = Vector2(33, 12)
+scale = Vector2(3.0393, -2.92726)
+shape = SubResource("CircleShape2D_i456f")
+
+[node name="enemyCollision" type="CollisionShape2D" parent="."]
+position = Vector2(21, 1)
+scale = Vector2(15.0756, 8.06703)
+shape = SubResource("CircleShape2D_begii")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-5.96046e-08, 2)
+rotation = 1.57195
+scale = Vector2(0.260076, 0.266368)
+texture = ExtResource("1_ax7na")
+hframes = 4
+vframes = 4
+
+[node name="squidHitBox" type="Area2D" parent="."]
+
+[node name="enemyCollision" type="CollisionShape2D" parent="squidHitBox"]
+position = Vector2(22, 1)
+rotation = 3.05985
+scale = Vector2(14.4698, 9.47352)
+shape = SubResource("CircleShape2D_begii")
+
+[connection signal="body_entered" from="detectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="detectionArea" to="." method="_on_detection_area_body_exited"]
+[connection signal="area_entered" from="squidHitBox" to="." method="_on_squid_hit_box_area_entered"]

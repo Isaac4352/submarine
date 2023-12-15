@@ -20,28 +20,110 @@ namespace submarine_game
 		private Vector2 starting_direction;
 		private Vector2 direction;
 		private Vector2 velocity;
-		private AnimationNodeStateMachinePlayback stateMachine;
-		private AnimationTree animationTree;
 
 		[Export]
 		public int maxHealth = 50;
 		[Export]
 		public int currentHealth;
+		[Export]
+
+		private bool treasureCollected;
 
 		[Signal] 
 		public delegate void healthChangedEventHandler();
 
-		private AudioStreamPlayer2D soundEffect;
+		public AnimationPlayer hurtBlink;
 
-		void _ready() {
-			stateMachine = GetNode<AnimationTree>("AnimationTree").Get("parameters/playback").As<AnimationNodeStateMachinePlayback>();
-			animationTree = GetNode<AnimationTree>("AnimationTree");
+		private AudioStreamPlayer2D soundEffect;
+		private ColorRect color;
+
+		public override void _Ready() {
+			GD.Print(GetParent().Name);
+			//stateMachine = GetNode<AnimationTree>("AnimationTree").Get("parameters/playback").As<AnimationNodeStateMachinePlayback>();
+			//animationTree = GetNode<AnimationTree>("AnimationTree");
 			starting_direction =  new Vector2(0,(float)0.1);
+			soundEffect = GetNode<AudioStreamPlayer2D>("SFXPlayer");
+			hurtBlink = GetNode<AnimationPlayer>("Effects");
+			color = GetNode("Sprite2D").GetNode<ColorRect>("ColorRect");
+			color.Modulate = new Color("00000000");
+			GD.Print("hurtBlink: " + hurtBlink);
 			velocity = new Vector2(1,1);
 			EmitSignal(nameof(healthChangedEventHandler));
 			currentHealth = maxHealth;
+			treasureCollected = false;
 			//updateAnimationParameter(starting_direction);
-	}
+		}
+
+		public void _on_hurt_box_area_entered(Area2D area){
+			GD.Print("area name: " + area.Name);
+
+			switch(area.Name)
+			{
+				case "jellyHitBox":
+					GD.Print(area.Name);
+					color.Modulate = new Color("ffffff7e");
+					knockback(500);
+					currentHealth -= 10;
+					hurtBlink.Play("hurtBlink");
+				break;
+
+				case "squidHitBox":
+					GD.Print(area.Name);
+					color.Modulate = new Color("ffffff7e");
+					knockback(700);
+					currentHealth -= 25;
+					hurtBlink.Play("hurtBlink");
+				break;
+
+				case "rockSurface":
+					GD.Print(area.Name);
+					color.Modulate = new Color("ffffff7e");
+					knockback(100);
+					currentHealth -= 5;
+					hurtBlink.Play("hurtBlink");
+				break;
+
+				case "treasureArea":
+					treasureCollected = true;
+					//area.CollisionLayer //activate collision if treasurecollected == false
+				break;
+
+				case "quitArea":
+					if(treasureCollected == true)
+					{
+						GD.Print(GetTree().CurrentScene.Name);
+						treasureCollected = false;
+						if(GetTree().CurrentScene.Name == "ocean_2")
+						{
+							GetTree().ChangeSceneToFile("win_screen.tscn");
+						}
+						else
+						{
+							GetTree().ChangeSceneToFile("ocean_level_2.tscn");
+						}
+						
+					}
+				break;
+
+
+			}
+		}	
+
+		public void gameOver()
+		{
+			if(currentHealth <= 0)
+			{
+				GetTree().ChangeSceneToFile("game_over.tscn");
+			}
+		}
+
+		public void knockback(int knockbackPower)
+		{
+			Vector2 knockbackDirection = -Velocity.Normalized() * knockbackPower;
+			Velocity = knockbackDirection;
+			MoveAndSlide();
+		}
+
 
 		private Vector2 GetInput() {
 			_rotationDirection = Input.GetAxis("ui_left", "ui_right");
@@ -55,11 +137,21 @@ namespace submarine_game
 			return direction;
 		}
 
-		private void updateAnimationParameter(Vector2 moveInput) {
-			if(moveInput != Vector2.Zero) 
+		// private void updateAnimationParameter(Vector2 moveInput) {
+		// 	if(moveInput != Vector2.Zero) 
+		// 	{
+		// 		animationTree.Set("parameters/idle/blend_position", moveInput);
+		// 		animationTree.Set("parameters/walk/blend_position", moveInput);
+		// 	}
+		// }
+
+		public void handleCollision()
+		{
+			for (int i = 0; i < GetSlideCollisionCount(); i++)
 			{
-				animationTree.Set("parameters/idle/blend_position", moveInput);
-				animationTree.Set("parameters/walk/blend_position", moveInput);
+				KinematicCollision2D collision = GetSlideCollision(i);
+				GodotObject collider = collision.GetCollider();
+				//GD.Print(collider);
 			}
 		}
 
@@ -69,19 +161,18 @@ namespace submarine_game
 
 		}
 
-		private void pickNewState() {
-			if(Velocity != Vector2.Zero) {
-				stateMachine.Travel("walk");
-			}
-			else {
-				stateMachine.Travel("idle");
-			}
-		}
+		// private void pickNewState() {
+		// 	if(Velocity != Vector2.Zero) {
+		// 		stateMachine.Travel("walk");
+		// 	}
+		// 	else {
+		// 		stateMachine.Travel("idle");
+		// 	}
+		// }
 
 		public override void _PhysicsProcess(double delta)
 		{
 			// Velocity is a property of RigidBody2D.
-			soundEffect = GetNode<AudioStreamPlayer2D>("./SoundEffectPlayer");
 			//parameters/idle/blend_position
 			velocity = Velocity;
 			
@@ -91,7 +182,7 @@ namespace submarine_game
 			//GD.Print(Position);
 			//updateAnimationParameter(direction);
 			//GD.Print(velocity);
-
+			
 			//acc and frict
 
 
@@ -248,6 +339,10 @@ namespace submarine_game
 			
 			MoveAndSlide();
 			//pickNewState();
+
+			//check Collisions
+			handleCollision();
+			gameOver();
 
 		}
 	}

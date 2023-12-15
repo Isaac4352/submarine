@@ -1,35 +1,47 @@
 [gd_scene load_steps=5 format=3 uid="uid://3ufvl5fxm145"]
 
-[ext_resource type="Texture2D" uid="uid://c0v7c6xjs2yq7" path="res://sprites/squid.png" id="1_uusp8"]
 [ext_resource type="Script" path="res://enemy.cs" id="1_yei2t"]
+[ext_resource type="Texture2D" uid="uid://7uovqd8ajjfo" path="res://sprites/jellyfish.png" id="2_t6c0q"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kodm5"]
 radius = 149.335
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ic3uw"]
-radius = 0.342379
+radius = 0.341136
 
-[node name="enemy" type="CharacterBody2D"]
-position = Vector2(35, 10)
+[node name="jellyfish" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_yei2t")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-34, -9.00002)
-scale = Vector2(0.05, 0.05)
-texture = ExtResource("1_uusp8")
 
 [node name="detectionArea" type="Area2D" parent="."]
 light_mask = 2
 visibility_layer = 2
+position = Vector2(-33, -12)
 
 [node name="detectionShape" type="CollisionShape2D" parent="detectionArea"]
-position = Vector2(-35, -10)
+position = Vector2(33, 12)
 shape = SubResource("CircleShape2D_kodm5")
 
 [node name="enemyCollision" type="CollisionShape2D" parent="."]
-position = Vector2(-35, -10)
+position = Vector2(-2.27374e-13, -2.38419e-07)
 scale = Vector2(14.6569, 10.7568)
+shape = SubResource("CircleShape2D_ic3uw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0.999996, 0.999999)
+rotation = 1.48432
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("2_t6c0q")
+
+[node name="jellyHitBox" type="Area2D" parent="."]
+
+[node name="enemyCollision" type="CollisionShape2D" parent="jellyHitBox"]
+position = Vector2(2, 5.96046e-08)
+rotation = 1.5458
+scale = Vector2(14.0032, 10.3679)
 shape = SubResource("CircleShape2D_ic3uw")
 
 [connection signal="body_entered" from="detectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="detectionArea" to="." method="_on_detection_area_body_exited"]
+[connection signal="area_entered" from="jellyHitBox" to="." method="_on_hit_box_area_entered"]
