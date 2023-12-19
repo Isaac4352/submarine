@@ -1,8 +1,7 @@
 res://default_env.tres
-res://enemy.tscn
+res://World.tscn
 res://progress_bar_theme.tres
 res://StartButton.cs
-res://World.tscn
 res://submarine.tscn
 res://menu.tscn
 res://options_menu.tscn
@@ -14,7 +13,9 @@ res://game_over.tscn
 res://treasure.tscn
 res://ocean_level_2.tscn
 res://win_screen.tscn
+res://enemy.tscn
 res://squid.tscn
+res://pause_menu.tscn
 res://control.cs
 res://enemy.cs
 res://enemyCollision.cs
@@ -24,6 +25,7 @@ res://Margin.cs
 res://menu.cs
 res://new_enemy.cs
 res://options_menu.cs
+res://pause_menu.cs
 res://Player.cs
 res://pression.cs
 res://QuitButton.cs
@@ -36,5 +38,3 @@ res://treasure.cs
 res://Volume.cs
 res://win_screen.cs
 res://World.cs
-res://pause_menu.tscn
-res://pause_menu.cs

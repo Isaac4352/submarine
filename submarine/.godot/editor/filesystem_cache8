@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1702957417
+::res://::1702958267
 control.cs::CSharpScript::-1::1699398479::0::1::::<><>::
 control.tscn::PackedScene::3206660969785413165::1702674278::0::1::::<><>::res://control.cs<>res://StartButton.cs<>res://SettingButton.cs<>res://QuitButton.cs
 default_bus_layout.tres::AudioBusLayout::1174378862979054899::1700486893::0::1::::<><>::
